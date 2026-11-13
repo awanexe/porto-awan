@@ -1,0 +1,33 @@
+/* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #0055FE;
+  }
+
+  /* Filter Active State */
+  .active-filter {
+    background-color: #121212;
+    color: #ffffff;
+  }
+  .dark .active-filter {
+    background-color: #ffffff;
+    color: #121212;
+  }
+
+  /* Editorial Line Effects */
+  .editorial-border-bottom {
+    border-bottom: 1px solid rgba(180, 180, 180, 0.2);
+  }
+
+  /* Card Hover Effects */
+  .project-card {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .project-card:hover {
+    transform: translateY(-4px);
+  }

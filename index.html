@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEXFOLIO — Personal Portfolio</title>
+  <meta name="theme-color" content="#F9F8F6">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Syne', 'sans-serif'],
+            body: ['Inter', 'sans-serif'],
+            mono: ['Space Grotesk', 'monospace']
+          },
+          colors: {
+            brand: {
+              offwhite: '#F9F8F6',
+              charcoal: '#121212',
+              card: '#F1F0EC',
+              accent: '#0055FE',
+              accentHover: '#0043C9',
+              border: '#E2E0D8',
+              darkBorder: '#282828',
+              darkBg: '#0D0D0D',
+              darkCard: '#161616'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body class="bg-brand-offwhite text-brand-charcoal dark:bg-brand-darkBg dark:text-gray-100 font-body antialiased selection:bg-brand-accent selection:text-white transition-colors duration-300">
+
+  <!-- TOP RUNNING TICKER / BAR -->
+  <div class="border-b border-brand-border dark:border-brand-darkBorder py-2 px-4 text-xs font-mono flex justify-between items-center bg-white/50 dark:bg-black/30 backdrop-blur-sm">
+    <div class="flex items-center space-x-3">
+      <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+      <span class="uppercase tracking-widest text-gray-500 dark:text-gray-400">STATUS:</span>
+      <span id="status-badge" class="font-medium">AVAILABLE FOR CONSULTATION</span>
+    </div>
+    <div class="hidden sm:flex items-center space-x-6 text-gray-500 dark:text-gray-400">
+      <span>LOCATION: PALU, ID (UTC+7)</span>
+      <span id="live-clock">--:-- WITA</span>
+    </div>
+  </div>
+
+  <!-- STICKY NAVIGATION -->
+  <header class="sticky top-0 z-40 bg-brand-offwhite/90 dark:bg-brand-darkBg/90 backdrop-blur-md border-b border-brand-border dark:border-brand-darkBorder transition-colors">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      
+      <!-- Brand / Logo -->
+      <a href="#home" class="group flex items-center space-x-3">
+        <span class="font-display font-extrabold text-2xl tracking-tighter group-hover:text-brand-accent transition-colors">NEXFOLIO<span class="text-brand-accent">.</span></span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex items-center space-x-8 text-sm font-mono tracking-tight uppercase">
+        <a href="#about" class="nav-link hover:text-brand-accent transition-colors">01. About</a>
+        <a href="#skills" class="nav-link hover:text-brand-accent transition-colors">02. Skills</a>
+        <a href="#experience" class="nav-link hover:text-brand-accent transition-colors">03. Experience</a>
+        <a href="#projects" class="nav-link hover:text-brand-accent transition-colors">04. Projects</a>
+        <a href="#contact" class="nav-link hover:text-brand-accent transition-colors">05. Contact</a>
+      </nav>
+
+      <!-- Action Buttons & Dark Mode -->
+      <div class="flex items-center space-x-4">
+        <!-- Theme Toggle -->
+        <button id="theme-toggle" class="p-2.5 rounded-full border border-brand-border dark:border-brand-darkBorder hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors" title="Toggle Theme">
+          <i data-lucide="sun" class="w-4 h-4 hidden dark:block"></i>
+          <i data-lucide="moon" class="w-4 h-4 block dark:hidden"></i>
+        </button>
+
+        <!-- CV Action -->
+        <button onclick="openCvModal()" class="hidden sm:inline-flex items-center space-x-2 px-5 py-2.5 text-xs font-mono font-semibold uppercase tracking-wider bg-brand-charcoal text-white dark:bg-white dark:text-brand-charcoal hover:bg-brand-accent dark:hover:bg-brand-accent dark:hover:text-white transition-all shadow-sm">
+          <span>Download CV</span>
+          <i data-lucide="arrow-down-to-line" class="w-3.5 h-3.5"></i>
+        </button>
+
+        <!-- Mobile Menu Button -->
+        <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg border border-brand-border dark:border-brand-darkBorder">
+          <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-menu" class="hidden md:hidden border-b border-brand-border dark:border-brand-darkBorder bg-brand-offwhite dark:bg-brand-darkBg px-6 py-4">
+      <div class="flex flex-col space-y-4 font-mono text-sm uppercase">
+        <a href="#about" class="mobile-nav-link py-1">01. About</a>
+        <a href="#skills" class="mobile-nav-link py-1">02. Skills</a>
+        <a href="#experience" class="mobile-nav-link py-1">03. Experience</a>
+        <a href="#projects" class="mobile-nav-link py-1">04. Projects</a>
+        <a href="#contact" class="mobile-nav-link py-1">05. Contact</a>
+        <button onclick="openCvModal()" class="inline-flex items-center justify-center space-x-2 w-full py-3 bg-brand-charcoal text-white dark:bg-white dark:text-black font-semibold text-xs uppercase">
+          <span>Download CV</span>
+          <i data-lucide="arrow-down-to-line" class="w-4 h-4"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="max-w-7xl mx-auto px-6">
+
+    <!-- HERO SECTION -->
+    <section id="home" class="py-20 md:py-32 border-b border-brand-border dark:border-brand-darkBorder">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
+        <div class="lg:col-span-8 space-y-8">
+          <div class="inline-flex items-center space-x-2 px-3 py-1 bg-gray-200 dark:bg-gray-800 text-xs font-mono tracking-wider uppercase rounded-full">
+            <span>S.H. / Legal Drafter & Tech Practitioner</span>
+          </div>
+          <h1 id="hero-name" class="font-display font-extrabold text-5xl sm:text-7xl lg:text-8xl tracking-tight leading-[0.95]">
+            MOH. KURNIAWAN SOBARI<span class="text-brand-accent">.</span>
+          </h1>
+          <p id="hero-tagline" class="text-xl sm:text-2xl font-light text-gray-600 dark:text-gray-300 max-w-2xl leading-relaxed">
+            Menyelaraskan kepatuhan hukum administrasi negara dengan efisiensi otomatisasi teknologi publik.
+          </p>
+        </div>
+
+        <div class="lg:col-span-4 flex flex-col justify-between space-y-8 lg:border-l lg:border-brand-border lg:dark:border-brand-darkBorder lg:pl-8">
+          <div class="space-y-4">
+            <h3 class="font-mono text-xs uppercase tracking-widest text-gray-400">CORE FOCUS</h3>
+            <ul class="space-y-2 text-sm font-medium">
+              <li class="flex items-center space-x-2"><i data-lucide="check" class="w-4 h-4 text-brand-accent"></i><span>Legal Drafting & Regional Regulations</span></li>
+              <li class="flex items-center space-x-2"><i data-lucide="check" class="w-4 h-4 text-brand-accent"></i><span>Public Policy & Asset Management</span></li>
+              <li class="flex items-center space-x-2"><i data-lucide="check" class="w-4 h-4 text-brand-accent"></i><span>Google Apps Script & Web Automation</span></li>
+            </ul>
+          </div>
+          <div class="pt-4 flex items-center space-x-4">
+            <a href="#projects" class="px-6 py-3.5 bg-brand-accent text-white font-mono text-xs uppercase font-bold tracking-wider hover:bg-brand-accentHover transition-colors inline-flex items-center space-x-2">
+              <span>View Projects</span>
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </a>
+            <a href="#contact" class="px-6 py-3.5 border border-brand-charcoal dark:border-white text-xs font-mono uppercase font-bold tracking-wider hover:bg-brand-charcoal hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors">
+              Get In Touch
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="py-24 border-b border-brand-border dark:border-brand-darkBorder">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-12">
+        <div class="md:col-span-4 space-y-4">
+          <span class="font-mono text-xs uppercase tracking-widest text-brand-accent font-bold">01 / ABOUT ME</span>
+          <h2 class="font-display font-bold text-3xl sm:text-4xl">Profil & Pendekatan Kerja</h2>
+        </div>
+        <div class="md:col-span-8 space-y-6 text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
+          <p id="about-text-content">
+            Sebagai lulusan Sarjana Hukum yang bertugas di Biro Hukum Provinsi Sulawesi Tengah, saya berfokus pada penyusunan regulasi yang presisi, pengusulan naskah kebijakan berbasis bukti, serta modernisasi alur administrasi birokrasi melalui pemrograman web dan otomatisasi Google Workspace.
+          </p>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-6 pt-6 font-mono border-t border-brand-border dark:border-brand-darkBorder">
+            <div>
+              <span class="text-xs text-gray-400 block uppercase">PENDIDIKAN</span>
+              <span class="font-semibold text-sm">Sarjana Hukum (S.H.)</span>
+            </div>
+            <div>
+              <span class="text-xs text-gray-400 block uppercase">INSTITUSI</span>
+              <span class="font-semibold text-sm">Pemprov Sulawesi Tengah</span>
+            </div>
+            <div>
+              <span class="text-xs text-gray-400 block uppercase">KOTA</span>
+              <span class="font-semibold text-sm">Palu, Indonesia</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS SECTION -->
+    <section id="skills" class="py-24 border-b border-brand-border dark:border-brand-darkBorder">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12">
+        <div class="space-y-2">
+          <span class="font-mono text-xs uppercase tracking-widest text-brand-accent font-bold">02 / COMPETENCIES</span>
+          <h2 class="font-display font-bold text-3xl sm:text-4xl">Keahlian Strategis</h2>
+        </div>
+        <p class="font-mono text-xs text-gray-500 uppercase mt-2 md:mt-0">Kombinasi Keahlian Hukum & Digital Architecture</p>
+      </div>
+
+      <div id="skills-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Rendered via JS -->
+      </div>
+    </section>
+
+    <!-- EXPERIENCE SECTION -->
+    <section id="experience" class="py-24 border-b border-brand-border dark:border-brand-darkBorder">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16">
+        <div class="space-y-2">
+          <span class="font-mono text-xs uppercase tracking-widest text-brand-accent font-bold">03 / CAREER TRACK</span>
+          <h2 class="font-display font-bold text-3xl sm:text-4xl">Pengalaman Kerja</h2>
+        </div>
+      </div>
+
+      <div id="experience-list" class="space-y-12">
+        <!-- Rendered via JS -->
+      </div>
+    </section>
+
+    <!-- PROJECTS SECTION -->
+    <section id="projects" class="py-24 border-b border-brand-border dark:border-brand-darkBorder">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12">
+        <div class="space-y-2">
+          <span class="font-mono text-xs uppercase tracking-widest text-brand-accent font-bold">04 / SELECTED WORKS</span>
+          <h2 class="font-display font-bold text-3xl sm:text-4xl">Portofolio Proyek</h2>
+        </div>
+
+        <!-- Categories Filter -->
+        <div id="project-filters" class="flex flex-wrap gap-2 mt-4 md:mt-0 font-mono text-xs uppercase">
+          <button onclick="filterProjects('ALL')" class="filter-btn active-filter px-4 py-2 border border-brand-charcoal dark:border-white">ALL</button>
+          <button onclick="filterProjects('Legal Tech')" class="filter-btn px-4 py-2 border border-brand-border dark:border-brand-darkBorder">Legal Tech</button>
+          <button onclick="filterProjects('Public Policy')" class="filter-btn px-4 py-2 border border-brand-border dark:border-brand-darkBorder">Public Policy</button>
+          <button onclick="filterProjects('Web Apps')" class="filter-btn px-4 py-2 border border-brand-border dark:border-brand-darkBorder">Web Apps</button>
+        </div>
+      </div>
+
+      <!-- Project Cards Grid -->
+      <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Rendered via JS -->
+      </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="py-24">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <div class="lg:col-span-5 space-y-8">
+          <div class="space-y-2">
+            <span class="font-mono text-xs uppercase tracking-widest text-brand-accent font-bold">05 / GET IN TOUCH</span>
+            <h2 class="font-display font-bold text-4xl sm:text-5xl">Mari Berkolaborasi.</h2>
+          </div>
+          <p class="text-gray-600 dark:text-gray-300 text-lg leading-relaxed">
+            Terbuka untuk diskusi formulasi regulasi, kajian hukum, konsultasi otomatisasi sistem birokrasi, maupun peluang kerja sama profesional.
+          </p>
+          
+          <div class="space-y-4 font-mono text-sm">
+            <div class="flex items-center space-x-3">
+              <i data-lucide="mail" class="w-5 h-5 text-brand-accent"></i>
+              <span id="contact-email">contact@kurniawan.dev</span>
+            </div>
+            <div class="flex items-center space-x-3">
+              <i data-lucide="map-pin" class="w-5 h-5 text-brand-accent"></i>
+              <span>Palu, Sulawesi Tengah, Indonesia</span>
+            </div>
+          </div>
+
+          <div class="pt-4 flex space-x-4">
+            <a id="link-linkedin" href="#" target="_blank" class="p-3 border border-brand-border dark:border-brand-darkBorder hover:border-brand-accent hover:text-brand-accent transition-colors">
+              <i data-lucide="linkedin" class="w-5 h-5"></i>
+            </a>
+            <a id="link-github" href="#" target="_blank" class="p-3 border border-brand-border dark:border-brand-darkBorder hover:border-brand-accent hover:text-brand-accent transition-colors">
+              <i data-lucide="github" class="w-5 h-5"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Form -->
+        <div class="lg:col-span-7 bg-brand-card dark:bg-brand-darkCard p-8 sm:p-12 border border-brand-border dark:border-brand-darkBorder">
+          <form id="contact-form" onsubmit="handleContactSubmit(event)" class="space-y-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div class="space-y-2">
+                <label class="font-mono text-xs uppercase tracking-wider text-gray-500">Nama Lengkap</label>
+                <input type="text" id="form-name" required class="w-full px-4 py-3 bg-white dark:bg-black border border-brand-border dark:border-brand-darkBorder focus:border-brand-accent focus:outline-none transition-colors">
+              </div>
+              <div class="space-y-2">
+                <label class="font-mono text-xs uppercase tracking-wider text-gray-500">Email Address</label>
+                <input type="email" id="form-email" required class="w-full px-4 py-3 bg-white dark:bg-black border border-brand-border dark:border-brand-darkBorder focus:border-brand-accent focus:outline-none transition-colors">
+              </div>
+            </div>
+
+            <div class="space-y-2">
+              <label class="font-mono text-xs uppercase tracking-wider text-gray-500">Subjek / Topik</label>
+              <input type="text" id="form-subject" required class="w-full px-4 py-3 bg-white dark:bg-black border border-brand-border dark:border-brand-darkBorder focus:border-brand-accent focus:outline-none transition-colors">
+            </div>
+
+            <div class="space-y-2">
+              <label class="font-mono text-xs uppercase tracking-wider text-gray-500">Pesan Anda</label>
+              <textarea id="form-message" rows="5" required class="w-full px-4 py-3 bg-white dark:bg-black border border-brand-border dark:border-brand-darkBorder focus:border-brand-accent focus:outline-none transition-colors"></textarea>
+            </div>
+
+            <button type="submit" id="btn-submit-contact" class="w-full py-4 bg-brand-accent text-white font-mono text-xs uppercase font-bold tracking-widest hover:bg-brand-accentHover transition-colors flex justify-center items-center space-x-2">
+              <span>KIRIM PESAN</span>
+              <i data-lucide="send" class="w-4 h-4"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-brand-border dark:border-brand-darkBorder py-12 bg-white dark:bg-black">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 text-xs font-mono text-gray-500">
+      <div>
+        <span>© 2026 NEXFOLIO. MOH. KURNIAWAN SOBARI, S.H. ALL RIGHTS RESERVED.</span>
+      </div>
+      <div class="flex space-x-6">
+        <span>SWISS MINIMALISM + MODERN EDITORIAL</span>
+        <a href="#home" class="hover:text-brand-accent uppercase">BACK TO TOP ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- PROJECT DETAIL MODAL -->
+  <div id="project-modal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+    <div class="bg-brand-offwhite dark:bg-brand-darkBg border border-brand-border dark:border-brand-darkBorder max-w-3xl w-full p-6 sm:p-8 space-y-6 relative max-h-[90vh] overflow-y-auto">
+      <button onclick="closeProjectModal()" class="absolute top-6 right-6 p-2 border border-brand-border dark:border-brand-darkBorder hover:bg-gray-200 dark:hover:bg-gray-800">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <span id="modal-project-category" class="font-mono text-xs uppercase tracking-widest text-brand-accent font-bold">CATEGORY</span>
+      <h2 id="modal-project-title" class="font-display font-bold text-3xl">Project Title</h2>
+      
+      <img id="modal-project-image" src="" alt="Project Preview" class="w-full h-64 object-cover border border-brand-border dark:border-brand-darkBorder">
+
+      <div class="space-y-4">
+        <h4 class="font-mono text-xs uppercase text-gray-400">DETAIL DESKRIPSI & STUDI KASUS</h4>
+        <p id="modal-project-desc" class="text-gray-700 dark:text-gray-300 leading-relaxed">Full description content...</p>
+      </div>
+
+      <div class="space-y-2">
+        <h4 class="font-mono text-xs uppercase text-gray-400">TEKNOLOGI / TEKNIS</h4>
+        <div id="modal-project-tech" class="flex flex-wrap gap-2 font-mono text-xs"></div>
+      </div>
+
+      <div class="pt-4 border-t border-brand-border dark:border-brand-darkBorder flex space-x-4">
+        <a id="modal-project-demo" href="#" target="_blank" class="px-6 py-3 bg-brand-accent text-white font-mono text-xs uppercase font-bold tracking-wider hover:bg-brand-accentHover">Database</a>
+        <a id="modal-project-repo" href="#" target="_blank" class="px-6 py-3 border border-brand-charcoal dark:border-white font-mono text-xs uppercase font-bold tracking-wider">Repository</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- CV DOWNLOAD / PREVIEW MODAL -->
+  <div id="cv-modal" class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6">
+    <div class="bg-brand-offwhite dark:bg-brand-darkBg border border-brand-border dark:border-brand-darkBorder max-w-md w-full p-8 space-y-6 relative text-center">
+      <button onclick="closeCvModal()" class="absolute top-6 right-6 p-2 border border-brand-border dark:border-brand-darkBorder hover:bg-gray-200 dark:hover:bg-gray-800">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="w-16 h-16 mx-auto rounded-full bg-brand-accent/10 text-brand-accent flex items-center justify-center">
+        <i data-lucide="file-text" class="w-8 h-8"></i>
+      </div>
+
+      <h3 class="font-display font-bold text-2xl">Curriculum Vitae</h3>
+      <p class="text-sm text-gray-600 dark:text-gray-400">
+        Unduh CV terbaru Moh. Kurniawan Sobari, S.H. (Format PDF, mencakup riwayat legal drafting, pendidikan, dan proyek teknologi).
+      </p>
+
+      <div class="pt-4 flex flex-col space-y-3 font-mono text-xs uppercase">
+        <a id="cv-download-link" href="#" target="_blank" class="w-full py-3.5 bg-brand-accent text-white font-bold tracking-wider hover:bg-brand-accentHover transition-colors flex justify-center items-center space-x-2">
+          <span>UNDUH DOKUMEN CV</span>
+          <i data-lucide="external-link" class="w-4 h-4"></i>
+        </a>
+        <button onclick="closeCvModal()" class="w-full py-3 border border-brand-border dark:border-brand-darkBorder">TUTUP</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 hidden max-w-md p-4 bg-brand-charcoal text-white dark:bg-white dark:text-brand-charcoal font-mono text-xs shadow-xl border border-brand-border flex items-center space-x-3">
+    <i data-lucide="info" class="w-5 h-5 text-brand-accent"></i>
+    <span id="toast-message">Notification message</span>
+  </div>
+
+  <link rel="stylesheet" href="/style.css">
+  <script src="/config.js"></script>
+  <script src="/api.js"></script>
+  <script src="/js.js"></script>
+</body>
+</html>
