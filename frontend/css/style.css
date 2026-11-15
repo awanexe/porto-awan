@@ -1,0 +1,324 @@
+/* =========================================================
+   NEXFOLIO — Sketchbook Edition
+   Extracted from GAS `css.html` template (unchanged styles).
+   ========================================================= */
+
+/* Responsive Consistent Container (Expanded Horizontal Space Utilization) */
+.sketch-container {
+  width: 100%;
+  max-width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .sketch-container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .sketch-container {
+    padding-left: 2.25rem;
+    padding-right: 2.25rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .sketch-container {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+/* Hand-Drawn Paper Texture & Base */
+.sketch-paper {
+  background-color: #FDFBF7;
+  background-image: radial-gradient(#E5E0D8 1px, transparent 1px);
+  background-size: 24px 24px;
+  color: #2D2D2D;
+}
+
+/* Dark Sketchbook Mode (Warm Charcoal Chalkboard with High Contrast) */
+.dark .sketch-paper {
+  background-color: #1E1D1B;
+  background-image: radial-gradient(#383530 1px, transparent 1px);
+  background-size: 24px 24px;
+  color: #FDFBF7;
+}
+
+/* Dark Mode Navigation & Topbar Contrast Fixes */
+.dark .sketch-header {
+  background-color: rgba(30, 29, 27, 0.96) !important;
+  border-color: #E5E0D8 !important;
+}
+
+.dark .sketch-topbar {
+  background-color: rgba(36, 34, 31, 0.95) !important;
+  border-color: rgba(229, 224, 216, 0.35) !important;
+}
+
+.dark .nav-link,
+.dark .mobile-nav-link {
+  color: #FDFBF7 !important;
+}
+
+.dark .nav-link:hover {
+  color: #FF6B6B !important;
+}
+
+.dark .bg-sketch-surface {
+  background-color: #282623 !important;
+  color: #FDFBF7 !important;
+}
+
+.dark .bg-sketch-bg {
+  background-color: #1E1D1B !important;
+  color: #FDFBF7 !important;
+}
+
+.dark .bg-sketch-yellow {
+  background-color: #4A4424 !important;
+  color: #FFF9C4 !important;
+}
+
+.dark .text-sketch-ink,
+.dark .text-sketch-ink\/90,
+.dark .text-sketch-ink\/85,
+.dark .text-sketch-ink\/80,
+.dark .text-sketch-ink\/75,
+.dark .text-sketch-ink\/70 {
+  color: #FDFBF7 !important;
+}
+
+.dark .border-sketch-ink {
+  border-color: #E5E0D8 !important;
+}
+
+.dark .shadow-hard-sm {
+  box-shadow: 3px 3px 0 #000000 !important;
+}
+
+.dark .shadow-hard {
+  box-shadow: 4px 4px 0 #000000 !important;
+}
+
+.dark .shadow-hard-lg {
+  box-shadow: 8px 8px 0 #000000 !important;
+}
+
+/* Hero Custom SVG Sketch Contrast */
+.hero-sketch-illustration {
+  color: #2D2D2D;
+}
+
+.dark .hero-sketch-illustration {
+  color: #FDFBF7;
+}
+
+/* Organic Irregular Border-Radius Tokens */
+.sketch-box {
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+}
+
+.sketch-box-alt {
+  border-radius: 18px 240px 14px 220px / 220px 14px 240px 18px;
+}
+
+.sketch-pill {
+  border-radius: 255px 25px 225px 25px / 25px 225px 25px 255px;
+}
+
+.sketch-circle {
+  border-radius: 52% 48% 55% 45% / 46% 54% 46% 54%;
+}
+
+/* Hand-Drawn Icon Circle Container */
+.sketch-icon-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border: 2px solid #2D2D2D;
+  border-radius: 54% 46% 49% 51% / 48% 53% 47% 52%;
+  background-color: #FFFFFF;
+}
+
+.dark .sketch-icon-circle {
+  border-color: #E5E0D8;
+  background-color: #282623;
+  color: #FDFBF7;
+}
+
+/* Hard Offset Shadows (Zero Blur) */
+.shadow-hard-sm {
+  box-shadow: 3px 3px 0 #2D2D2D;
+}
+
+.shadow-hard {
+  box-shadow: 4px 4px 0 #2D2D2D;
+}
+
+.shadow-hard-lg {
+  box-shadow: 8px 8px 0 #2D2D2D;
+}
+
+/* Tactile Hand-Drawn Buttons */
+.sketch-btn {
+  border: 2px solid #2D2D2D;
+  border-radius: 255px 18px 225px 18px / 18px 225px 18px 255px;
+  box-shadow: 4px 4px 0 #2D2D2D;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+  cursor: pointer;
+}
+
+.dark .sketch-btn {
+  border-color: #E5E0D8;
+  box-shadow: 4px 4px 0 #000000;
+}
+
+.sketch-btn:hover {
+  background-color: #FF4D4D !important;
+  color: #FFFFFF !important;
+  transform: translate(-1px, -1px) rotate(-0.5deg);
+  box-shadow: 5px 5px 0 #2D2D2D;
+}
+
+.dark .sketch-btn:hover {
+  box-shadow: 5px 5px 0 #000000;
+}
+
+.sketch-btn:active {
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px 0 #2D2D2D;
+}
+
+.sketch-btn-secondary {
+  border: 2px solid #2D2D2D;
+  border-radius: 18px 255px 18px 225px / 225px 18px 255px 18px;
+  box-shadow: 4px 4px 0 #2D2D2D;
+  background-color: #FFFFFF;
+  color: #2D2D2D;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+  cursor: pointer;
+}
+
+.dark .sketch-btn-secondary {
+  background-color: #282623;
+  color: #FDFBF7;
+  border-color: #E5E0D8;
+  box-shadow: 4px 4px 0 #000000;
+}
+
+.sketch-btn-secondary:hover {
+  background-color: #2D5DA1 !important;
+  color: #FFFFFF !important;
+  transform: translate(-1px, -1px) rotate(0.5deg);
+  box-shadow: 5px 5px 0 #2D2D2D;
+}
+
+.dark .sketch-btn-secondary:hover {
+  box-shadow: 5px 5px 0 #000000;
+}
+
+.sketch-btn-secondary:active {
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px 0 #2D2D2D;
+}
+
+/* Active Project Filter State */
+.active-filter {
+  background-color: #2D5DA1 !important;
+  color: #FFFFFF !important;
+  transform: rotate(-1.5deg);
+}
+
+/* Hand-Drawn Form Inputs */
+.sketch-input {
+  background-color: #FFFFFF;
+  color: #2D2D2D;
+  border: 2px solid #2D2D2D;
+  border-radius: 255px 12px 225px 12px / 12px 225px 12px 255px;
+  box-shadow: 3px 3px 0 #E5E0D8;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.sketch-input:focus {
+  outline: none;
+  border-color: #2D5DA1;
+  box-shadow: 4px 4px 0 #2D5DA1;
+  transform: translate(-1px, -1px);
+}
+
+.dark .sketch-input {
+  background-color: #1E1D1B;
+  color: #FDFBF7;
+  border-color: #E5E0D8;
+  box-shadow: 3px 3px 0 #000000;
+}
+
+.dark .sketch-input:focus {
+  border-color: #7FB0FF;
+  box-shadow: 4px 4px 0 #7FB0FF;
+}
+
+/* Translucent Masking Tape Strip */
+.sketch-tape {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-2deg);
+  width: 110px;
+  height: 28px;
+  background-color: rgba(229, 224, 216, 0.85);
+  border-left: 2px dashed rgba(45, 45, 45, 0.35);
+  border-right: 2px dashed rgba(45, 45, 45, 0.35);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.dark .sketch-tape {
+  background-color: rgba(92, 87, 79, 0.85);
+  border-left-color: rgba(253, 251, 247, 0.4);
+  border-right-color: rgba(253, 251, 247, 0.4);
+}
+
+/* Project Card Playful Hover */
+.project-card {
+  border: 2px solid #2D2D2D;
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  box-shadow: 4px 4px 0 #2D2D2D;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dark .project-card {
+  border-color: #E5E0D8;
+  box-shadow: 4px 4px 0 #000000;
+}
+
+.project-card:hover {
+  transform: translateY(-4px) rotate(-1deg);
+  box-shadow: 8px 8px 0 #2D2D2D;
+}
+
+.dark .project-card:hover {
+  box-shadow: 8px 8px 0 #000000;
+}
+
+/* Custom Sketch Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #FDFBF7;
+  border-left: 2px solid #2D2D2D;
+}
+::-webkit-scrollbar-thumb {
+  background: #FF4D4D;
+  border: 2px solid #2D2D2D;
+}
