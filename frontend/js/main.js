@@ -440,7 +440,7 @@ function renderExperience() {
 // PROJECT CATEGORY CAROUSEL RENDERER
 // =========================================================
 
-// Ordered display categories
+// Preferred display order — categories not in this list are appended after.
 const PROJECT_CATEGORIES = ['Web App', 'Logo Design', 'Social Media', 'Shirt Design', 'Magazine'];
 
 function renderProjectsByCategory() {
@@ -448,19 +448,26 @@ function renderProjectsByCategory() {
   if (!container) return;
   container.innerHTML = '';
 
-  // Group by category preserving display order
-  const grouped = {};
-  PROJECT_CATEGORIES.forEach(cat => { grouped[cat] = []; });
+  // Group projects by category (case-insensitive key → original label preserved)
+  const grouped = {}; // { normalizedKey: { label, projects[] } }
   portfolioState.projects.forEach(proj => {
-    // Also accept projects whose category matches any defined category
-    const key = PROJECT_CATEGORIES.find(c => c.toLowerCase() === proj.category.toLowerCase()) || proj.category;
-    if (!grouped[key]) grouped[key] = [];
-    grouped[key].push(proj);
+    const raw = (proj.category || '').trim();
+    const key = raw.toLowerCase();
+    if (!grouped[key]) grouped[key] = { label: raw, projects: [] };
+    grouped[key].projects.push(proj);
   });
 
-  PROJECT_CATEGORIES.forEach(cat => {
-    const projects = grouped[cat];
+  // Build ordered list: preferred categories first, then any extras from the sheet
+  const preferredKeys = PROJECT_CATEGORIES.map(c => c.toLowerCase());
+  const extraKeys = Object.keys(grouped).filter(k => !preferredKeys.includes(k));
+  const orderedKeys = [...preferredKeys, ...extraKeys].filter(k => grouped[k]);
+
+  orderedKeys.forEach(key => {
+    const { label, projects } = grouped[key];
     if (!projects || projects.length === 0) return;
+
+    // Sort each category's projects by their display_order field
+    projects.sort((a, b) => (Number(a.order) || 0) - (Number(b.order) || 0));
 
     const row = document.createElement('div');
     row.className = 'project-category-row';
@@ -469,7 +476,7 @@ function renderProjectsByCategory() {
     const heading = document.createElement('div');
     heading.className = 'project-category-label mb-4';
     heading.innerHTML = `
-      <span class="inline-block px-4 py-1 bg-sketch-yellow text-sketch-ink border-2 border-sketch-ink sketch-pill font-bold text-lg -rotate-1">${cat}</span>
+      <span class="inline-block px-4 py-1 bg-sketch-yellow text-sketch-ink border-2 border-sketch-ink sketch-pill font-bold text-lg -rotate-1">${label}</span>
       <span class="text-sketch-ink/60 text-base">${projects.length} project${projects.length > 1 ? 's' : ''}</span>
     `;
     row.appendChild(heading);
@@ -486,18 +493,18 @@ function renderProjectsByCategory() {
     // Prev button
     const prevBtn = document.createElement('button');
     prevBtn.className = 'carousel-btn carousel-btn-prev';
-    prevBtn.setAttribute('aria-label', `Scroll ${cat} left`);
+    prevBtn.setAttribute('aria-label', `Scroll ${label} left`);
     prevBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>`;
     wrapper.appendChild(prevBtn);
 
     // Next button
     const nextBtn = document.createElement('button');
     nextBtn.className = 'carousel-btn carousel-btn-next';
-    nextBtn.setAttribute('aria-label', `Scroll ${cat} right`);
+    nextBtn.setAttribute('aria-label', `Scroll ${label} right`);
     nextBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>`;
     wrapper.appendChild(nextBtn);
 
-    // Track
+    // Scroll track
     const track = document.createElement('div');
     track.className = 'carousel-track';
 
@@ -531,7 +538,7 @@ function renderProjectsByCategory() {
     row.appendChild(wrapper);
     container.appendChild(row);
 
-    // Wire up carousel scroll buttons
+    // Wire carousel navigation
     const scrollAmt = 360;
     prevBtn.addEventListener('click', () => { track.scrollBy({ left: -scrollAmt, behavior: 'smooth' }); });
     nextBtn.addEventListener('click', () => { track.scrollBy({ left: scrollAmt, behavior: 'smooth' }); });

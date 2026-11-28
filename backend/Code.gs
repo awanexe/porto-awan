@@ -179,15 +179,18 @@ function setupDatabase() {
   }
 
   // 4. Projects Sheet
+  // Columns: id | title | category | short_desc | full_desc | image_url | tech_stack | database | repo_url | featured | display_order
+  // Categories: Web App | Logo Design | Social Media | Shirt Design | Magazine
   let projSheet = ss.getSheetByName("Projects");
   if (!projSheet) {
     projSheet = ss.insertSheet("Projects");
     projSheet.appendRow(["id", "title", "category", "short_desc", "full_desc", "image_url", "tech_stack", "database", "repo_url", "featured", "display_order"]);
     const defaultProjects = [
+      // — Web App —
       [
         "PRJ-01",
         "E-Legis: Sistem Otomatisasi Draft SK Gubernur",
-        "Legal Tech",
+        "Web App",
         "Platform otomatisasi pembuatan dan standarisasi konsiderans & diktum SK Gubernur berbasis Google Workspace.",
         "Proyek ini merestrukturisasi alur penyusunan draft Keputusan Gubernur dengan templating otomatis, validasi kode akun retribusi/denda administrasi, dan sistem audit trail berbasis Apps Script.",
         "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=1000&q=80",
@@ -199,21 +202,8 @@ function setupDatabase() {
       ],
       [
         "PRJ-02",
-        "Integrasi Ekosistem Alumni & Talent Pool Daerah",
-        "Public Policy",
-        "Naskah kebijakan dan model arsitektur talent management untuk akselerasi pembangunan daerah.",
-        "Formulasi kerangka kerja strategis untuk memetakan, mengidentifikasi, dan mendistribusikan talenta alumni perguruan tinggi ke dalam sektor prioritas daerah Sulawesi Tengah.",
-        "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1000&q=80",
-        "Policy Paper, Strategic Planning, Data Analytics",
-        "#",
-        "#",
-        "TRUE",
-        2
-      ],
-      [
-        "PRJ-03",
         "Dashboard Analisis Retribusi & Asset Management",
-        "Web Apps",
+        "Web App",
         "Sistem monitoring dan pencatatan pendapatan denda serta klasifikasi harga standar barang milik daerah.",
         "Aplikasi web internal untuk rekapitulasi real-time denda pelanggaran administratif dan klasifikasi barang daerah menggunakan integrasi Apps Script dan Google Sheets.",
         "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1000&q=80",
@@ -221,7 +211,128 @@ function setupDatabase() {
         "#",
         "#",
         "TRUE",
+        2
+      ],
+      [
+        "PRJ-03",
+        "Integrasi Ekosistem Alumni & Talent Pool Daerah",
+        "Web App",
+        "Naskah kebijakan dan model arsitektur talent management untuk akselerasi pembangunan daerah.",
+        "Formulasi kerangka kerja strategis untuk memetakan, mengidentifikasi, dan mendistribusikan talenta alumni perguruan tinggi ke dalam sektor prioritas daerah Sulawesi Tengah.",
+        "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1000&q=80",
+        "Policy Paper, Strategic Planning, Data Analytics",
+        "#",
+        "#",
+        "FALSE",
         3
+      ],
+      // — Logo Design —
+      [
+        "PRJ-04",
+        "Branding Logo — Pemprov Sulteng Event",
+        "Logo Design",
+        "Desain logo resmi untuk acara tahunan Pemerintah Provinsi Sulawesi Tengah.",
+        "Perancangan identitas visual event: konsep sketsa, digitalisasi vektor, palet warna institusional, dan panduan penggunaan logo (brand guidelines).",
+        "https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=1000&q=80",
+        "Adobe Illustrator, Brand Identity, Vector Design",
+        "#",
+        "#",
+        "FALSE",
+        4
+      ],
+      [
+        "PRJ-05",
+        "Logo Komunitas Hukum Digital",
+        "Logo Design",
+        "Identitas visual komunitas lintas profesi: hukum + teknologi.",
+        "Desain logotype dan logomark yang mencerminkan sinergi hukum administrasi dan digitalisasi layanan publik. Tersedia dalam variasi warna terang dan gelap.",
+        "https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&w=1000&q=80",
+        "Figma, Typography, Brand Design",
+        "#",
+        "#",
+        "FALSE",
+        5
+      ],
+      // — Social Media —
+      [
+        "PRJ-06",
+        "Konten Infografis Hukum — Instagram",
+        "Social Media",
+        "Seri infografis edukasi hukum administrasi negara untuk platform Instagram.",
+        "Produksi 12 konten infografis yang menjelaskan konsep hukum administrasi, regulasi daerah, dan hak warga negara secara visual dan mudah dipahami masyarakat umum.",
+        "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=1000&q=80",
+        "Canva Pro, Adobe Express, Copywriting",
+        "#",
+        "#",
+        "FALSE",
+        6
+      ],
+      [
+        "PRJ-07",
+        "Kampanye Digital Kesadaran Regulasi",
+        "Social Media",
+        "Paket konten media sosial untuk kampanye kesadaran peraturan daerah.",
+        "Desain visual dan teks kampanye lintas platform (Instagram, Facebook, Twitter/X) mencakup poster, carousel post, dan story template untuk diseminasi informasi regulasi daerah.",
+        "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?auto=format&fit=crop&w=1000&q=80",
+        "Adobe Photoshop, Canva, Social Media Strategy",
+        "#",
+        "#",
+        "FALSE",
+        7
+      ],
+      // — Shirt Design —
+      [
+        "PRJ-08",
+        "Desain Kaos — Tim Hukum Pemprov",
+        "Shirt Design",
+        "Desain seragam kasual tim Biro Hukum untuk kegiatan non-formal.",
+        "Perancangan desain sablon kaos bertemakan identitas institusi dengan elemen visual yang mencerminkan profesionalisme dan semangat kebersamaan tim Biro Hukum Sulteng.",
+        "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=1000&q=80",
+        "Adobe Illustrator, Print Design, Mockup",
+        "#",
+        "#",
+        "FALSE",
+        8
+      ],
+      [
+        "PRJ-09",
+        "Merchandise Kaos Event Legal Summit",
+        "Shirt Design",
+        "Koleksi kaos merchandise untuk peserta Legal Summit Sulawesi Tengah.",
+        "Desain 3 varian kaos event Legal Summit dengan tema 'Hukum untuk Semua': front print, back print, dan label custom. Dicetak dalam 3 warna pilihan.",
+        "https://images.unsplash.com/photo-1503341504253-dff4815485f1?auto=format&fit=crop&w=1000&q=80",
+        "Illustrator, DTF Print, Mockup Design",
+        "#",
+        "#",
+        "FALSE",
+        9
+      ],
+      // — Magazine —
+      [
+        "PRJ-10",
+        "Buletin Hukum Daerah — Edisi Perdana",
+        "Magazine",
+        "Desain layout buletin resmi Biro Hukum Prov. Sulawesi Tengah.",
+        "Perancangan layout editorial buletin hukum triwulanan: tipografi, grid sistem, ilustrasi, dan tata letak artikel. Mencakup rubrik regulasi terbaru, opini hukum, dan profil ASN.",
+        "https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=1000&q=80",
+        "Adobe InDesign, Editorial Design, Typography",
+        "#",
+        "#",
+        "FALSE",
+        10
+      ],
+      [
+        "PRJ-11",
+        "Annual Report Biro Hukum 2024",
+        "Magazine",
+        "Desain laporan tahunan visual Biro Hukum Pemprov Sulawesi Tengah.",
+        "Transformasi data capaian kinerja tahunan menjadi dokumen visual yang menarik: infografis data hukum, timeline regulasi, dan ringkasan pencapaian program kerja.",
+        "https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&w=1000&q=80",
+        "InDesign, Data Visualization, Report Design",
+        "#",
+        "#",
+        "FALSE",
+        11
       ]
     ];
     defaultProjects.forEach(row => projSheet.appendRow(row));
