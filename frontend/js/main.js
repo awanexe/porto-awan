@@ -1,7 +1,6 @@
 /* =========================================================
    NEXFOLIO — Frontend Engine (Vercel / Hybrid)
-   Backend  : Google Apps Script (via /api/proxy)
-   Fallback : Mock data (jika backend tidak tersedia)
+   Backend: Google Apps Script (via /api/proxy)
    ========================================================= */
 
 // Global State
@@ -14,203 +13,6 @@ let portfolioState = {
 
 // API Base Path (Vercel Serverless Proxy → GAS)
 const API_BASE = '/api/proxy';
-
-// Mock Data Fallback jika dijalankan di luar environment hybrid
-const mockState = {
-  profile: {
-    full_name: "Moh. Kurniawan Sobari, S.H.",
-    title: "Legal Drafter & Public Sector Tech Practitioner",
-    tagline: "Menyelaraskan kepatuhan hukum administrasi negara dengan efisiensi otomatisasi teknologi publik.",
-    about_text: "Saya seorang profesional di bidang Hukum Administrasi Negara dan Legal Drafting di Biro Hukum Pemprov Sulawesi Tengah. Berfokus pada penyusunan regulasi yang presisi, naskah kebijakan berbasis bukti, serta modernisasi alur birokrasi melalui pemrograman web dan otomatisasi Google Workspace.",
-    cv_drive_link: "https://drive.google.com",
-    email: "contact@kurniawan.dev",
-    linkedin_url: "https://linkedin.com",
-    github_url: "https://github.com",
-    availability: "Available for Advisory & Consultation"
-  },
-  skills: [
-    { id: "S1", category: "Legal & Regulatory", name: "Administrative Legal Drafting", level: "Expert", order: 1 },
-    { id: "S2", category: "Legal & Regulatory", name: "Regional Regulation (Perda/Pergub)", level: "Expert", order: 2 },
-    { id: "S3", category: "Legal & Regulatory", name: "Public Policy Analysis", level: "Advanced", order: 3 },
-    { id: "S4", category: "Tech & Automation", name: "Google Apps Script", level: "Advanced", order: 4 },
-    { id: "S5", category: "Tech & Automation", name: "Workflow Automation", level: "Advanced", order: 5 },
-    { id: "S6", category: "Tech & Automation", name: "HTML5 / CSS3 / JavaScript", level: "Intermediate", order: 6 },
-    { id: "S7", category: "Management", name: "Public Asset (BMD) Management", level: "Advanced", order: 7 },
-    { id: "S8", category: "Management", name: "Strategic Talent Pool Framework", level: "Advanced", order: 8 }
-  ],
-  experience: [
-    {
-      id: "E1",
-      role: "PNS / Legal Drafter",
-      company: "Biro Hukum Sekretariat Daerah Prov. Sulawesi Tengah",
-      period: "2024 - Sekarang",
-      location: "Palu, Indonesia",
-      description: "Penyusunan draft Keputusan Gubernur, Peraturan Gubernur, analisis normatif regulasi daerah, serta otomatisasi kearsipan hukum.",
-      highlights: "SK Gubernur Standar Harga Barang Milik Daerah; Naskah Integrasi Talent Pool Daerah",
-      order: 1
-    },
-    {
-      id: "E2",
-      role: "Advocate Apprentice / Legal Associate",
-      company: "FHP Law School & Legal Associates",
-      period: "2023 - 2024",
-      location: "Indonesia",
-      description: "Penyusunan pendapat hukum (legal opinion), penyelarasan draft kontrak, dan riset regulasi teknis.",
-      highlights: "Lulus Pendidikan Khusus Profesi Advokat (PKPA)",
-      order: 2
-    }
-  ],
-  projects: [
-    // — Web App —
-    {
-      id: "P1",
-      title: "E-Legis: Otomatisasi Draft SK Gubernur",
-      category: "Web App",
-      shortDesc: "Platform otomatisasi pembuatan dan standarisasi konsiderans & diktum SK Gubernur.",
-      fullDesc: "Sistem otomatisasi penyusunan draft Keputusan Gubernur berbasis Google Workspace API. Fitur mencakup penyesuaian kode akun retribusi, alokasi tarif denda administratif, dan pemastian kepatuhan asas-asas umum pemerintahan yang baik (AUPB).",
-      imageUrl: "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=1000&q=80",
-      techStack: "Google Apps Script, Google Docs API, JavaScript",
-      demoUrl: "#",
-      repoUrl: "#",
-      featured: "TRUE",
-      order: 1
-    },
-    {
-      id: "P2",
-      title: "Dashboard Analisis Retribusi & Asset Management",
-      category: "Web App",
-      shortDesc: "Sistem monitoring pencatatan pendapatan denda serta klasifikasi harga standar barang milik daerah.",
-      fullDesc: "Aplikasi web internal untuk rekapitulasi real-time denda pelanggaran administratif dan klasifikasi barang daerah menggunakan integrasi Apps Script dan Google Sheets.",
-      imageUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1000&q=80",
-      techStack: "Google Sheets API, JavaScript, Tailwind CSS",
-      demoUrl: "#",
-      repoUrl: "#",
-      featured: "TRUE",
-      order: 2
-    },
-    {
-      id: "P3",
-      title: "Integrasi Talent Pool Daerah",
-      category: "Web App",
-      shortDesc: "Naskah kebijakan dan model arsitektur talent management untuk akselerasi pembangunan daerah.",
-      fullDesc: "Formulasi kerangka kerja strategis untuk memetakan, mengidentifikasi, dan mendistribusikan talenta alumni perguruan tinggi ke dalam sektor prioritas daerah Sulawesi Tengah.",
-      imageUrl: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1000&q=80",
-      techStack: "Policy Paper, Strategic Planning, Data Analytics",
-      demoUrl: "#",
-      repoUrl: "#",
-      featured: "FALSE",
-      order: 3
-    },
-    // — Logo Design —
-    {
-      id: "P4",
-      title: "Branding Logo — Pemprov Sulteng Event",
-      category: "Logo Design",
-      shortDesc: "Desain logo resmi untuk acara tahunan Pemerintah Provinsi Sulawesi Tengah.",
-      fullDesc: "Perancangan identitas visual event: konsep sketsa, digitalisasi vektor, palet warna institusional, dan panduan penggunaan logo (brand guidelines).",
-      imageUrl: "https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=1000&q=80",
-      techStack: "Adobe Illustrator, Brand Identity, Vector Design",
-      demoUrl: "#",
-      repoUrl: "#",
-      featured: "FALSE",
-      order: 4
-    },
-    {
-      id: "P5",
-      title: "Logo Komunitas Hukum Digital",
-      category: "Logo Design",
-      shortDesc: "Identitas visual komunitas lintas profesi: hukum + teknologi.",
-      fullDesc: "Desain logotype dan logomark yang mencerminkan sinergi hukum administrasi dan digitalisasi layanan publik. Tersedia dalam variasi warna terang dan gelap.",
-      imageUrl: "https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&w=1000&q=80",
-      techStack: "Figma, Typography, Brand Design",
-      demoUrl: "#",
-      repoUrl: "#",
-      featured: "FALSE",
-      order: 5
-    },
-    // — Social Media —
-    {
-      id: "P6",
-      title: "Konten Infografis Hukum — Instagram",
-      category: "Social Media",
-      shortDesc: "Seri infografis edukasi hukum administrasi negara untuk platform Instagram.",
-      fullDesc: "Produksi 12 konten infografis yang menjelaskan konsep hukum administrasi, regulasi daerah, dan hak warga negara secara visual dan mudah dipahami masyarakat umum.",
-      imageUrl: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=1000&q=80",
-      techStack: "Canva Pro, Adobe Express, Copywriting",
-      demoUrl: "#",
-      repoUrl: "#",
-      featured: "FALSE",
-      order: 6
-    },
-    {
-      id: "P7",
-      title: "Kampanye Digital Kesadaran Regulasi",
-      category: "Social Media",
-      shortDesc: "Paket konten media sosial untuk kampanye kesadaran peraturan daerah.",
-      fullDesc: "Desain visual dan teks kampanye lintas platform (Instagram, Facebook, Twitter/X) mencakup poster, carousel post, dan story template untuk diseminasi informasi regulasi daerah.",
-      imageUrl: "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?auto=format&fit=crop&w=1000&q=80",
-      techStack: "Adobe Photoshop, Canva, Social Media Strategy",
-      demoUrl: "#",
-      repoUrl: "#",
-      featured: "FALSE",
-      order: 7
-    },
-    // — Shirt Design —
-    {
-      id: "P8",
-      title: "Desain Kaos — Tim Hukum Pemprov",
-      category: "Shirt Design",
-      shortDesc: "Desain seragam kasual tim Biro Hukum untuk kegiatan non-formal.",
-      fullDesc: "Perancangan desain sablon kaos bertemakan identitas institusi dengan elemen visual yang mencerminkan profesionalisme dan semangat kebersamaan tim Biro Hukum Sulteng.",
-      imageUrl: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=1000&q=80",
-      techStack: "Adobe Illustrator, Print Design, Mockup",
-      demoUrl: "#",
-      repoUrl: "#",
-      featured: "FALSE",
-      order: 8
-    },
-    {
-      id: "P9",
-      title: "Merchandise Kaos Event Legal Summit",
-      category: "Shirt Design",
-      shortDesc: "Koleksi kaos merchandise untuk peserta Legal Summit Sulawesi Tengah.",
-      fullDesc: "Desain 3 varian kaos event Legal Summit dengan tema 'Hukum untuk Semua': front print, back print, dan label custom. Dicetak dalam 3 warna pilihan.",
-      imageUrl: "https://images.unsplash.com/photo-1503341504253-dff4815485f1?auto=format&fit=crop&w=1000&q=80",
-      techStack: "Illustrator, DTF Print, Mockup Design",
-      demoUrl: "#",
-      repoUrl: "#",
-      featured: "FALSE",
-      order: 9
-    },
-    // — Magazine —
-    {
-      id: "P10",
-      title: "Buletin Hukum Daerah — Edisi Perdana",
-      category: "Magazine",
-      shortDesc: "Desain layout buletin resmi Biro Hukum Prov. Sulawesi Tengah.",
-      fullDesc: "Perancangan layout editorial buletin hukum triwulanan: tipografi, grid sistem, ilustrasi, dan tata letak artikel. Mencakup rubrik regulasi terbaru, opini hukum, dan profil ASN.",
-      imageUrl: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=1000&q=80",
-      techStack: "Adobe InDesign, Editorial Design, Typography",
-      demoUrl: "#",
-      repoUrl: "#",
-      featured: "FALSE",
-      order: 10
-    },
-    {
-      id: "P11",
-      title: "Annual Report Biro Hukum 2024",
-      category: "Magazine",
-      shortDesc: "Desain laporan tahunan visual Biro Hukum Pemprov Sulawesi Tengah.",
-      fullDesc: "Transformasi data capaian kinerja tahunan menjadi dokumen visual yang menarik: infografis data hukum, timeline regulasi, dan ringkasan pencapaian program kerja.",
-      imageUrl: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&w=1000&q=80",
-      techStack: "InDesign, Data Visualization, Report Design",
-      demoUrl: "#",
-      repoUrl: "#",
-      featured: "FALSE",
-      order: 11
-    }
-  ]
-};
 
 // =========================================================
 // API ADAPTER (fetch → Vercel Proxy → GAS)
@@ -339,18 +141,28 @@ async function loadPortfolioData() {
       portfolioState = response.data;
       renderAllData();
     } else {
-      console.warn('[NEXFOLIO] Backend returned non-success:', response);
-      useMockData();
+      console.error('[NEXFOLIO] Backend returned non-success:', response);
+      showBackendError();
     }
   } catch (err) {
-    console.warn('[NEXFOLIO] API fetch failed — using mock data:', err.message);
-    useMockData();
+    console.error('[NEXFOLIO] API fetch failed:', err.message);
+    showBackendError();
   }
 }
 
-function useMockData() {
-  portfolioState = mockState;
-  renderAllData();
+function showBackendError() {
+  const container = document.getElementById('projects-categories');
+  if (container) {
+    container.innerHTML = `
+      <div class="p-8 bg-sketch-surface border-2 border-sketch-ink sketch-box text-center space-y-3">
+        <span class="text-4xl">⚠️</span>
+        <p class="font-bold text-xl text-sketch-ink">Gagal memuat data dari backend.</p>
+        <p class="text-sketch-ink/70">Pastikan GAS Web App URL sudah dikonfigurasi dan spreadsheet dapat diakses.</p>
+      </div>
+    `;
+  }
+  // shortcut: hanya tampilkan error di section projects; section lain (profile, skills, experience)
+  // tetap kosong/default karena tidak ada fallback data.
 }
 
 function renderAllData() {
