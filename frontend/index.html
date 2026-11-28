@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEXFOLIO — Personal Portfolio</title>
+  <meta name="theme-color" content="#FDFBF7">
+  <meta name="description" content="Personal portfolio Moh. Kurniawan Sobari, S.H. — Legal Drafter & Public Sector Technology Specialist.">
+
+  <!-- Favicons -->
+  <link rel="icon" href="/icons/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+  <link rel="apple-touch-icon" href="/icons/favicon-32x32.png">
+
+  <!-- Hand-Drawn Typography: Kalam 700 & Patrick Hand 400 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@700&family=Patrick+Hand&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Kalam', 'cursive'],
+            body: ['Patrick Hand', 'cursive'],
+            mono: ['Patrick Hand', 'cursive']
+          },
+          colors: {
+            sketch: {
+              bg: '#FDFBF7',
+              surface: '#FFFFFF',
+              ink: '#2D2D2D',
+              muted: '#E5E0D8',
+              red: '#FF4D4D',
+              blue: '#2D5DA1',
+              yellow: '#FFF9C4'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Application CSS -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="sketch-paper text-sketch-ink dark:text-sketch-bg font-body text-lg antialiased selection:bg-sketch-yellow selection:text-sketch-ink transition-colors duration-200">
+
+  <!-- TOP NOTEBOOK STRIP -->
+  <div class="sketch-topbar border-b-2 border-dashed border-sketch-ink/40 dark:border-sketch-muted/30 py-2.5 bg-sketch-surface/85 dark:bg-[#24221F]/90 transition-colors">
+    <div class="sketch-container flex flex-wrap justify-between items-center gap-2 text-base">
+      <div class="flex items-center space-x-2.5">
+        <span class="inline-block w-3 h-3 bg-sketch-red border-2 border-sketch-ink dark:border-sketch-bg sketch-circle animate-pulse"></span>
+        <span class="uppercase tracking-wider text-sketch-ink/80 dark:text-sketch-muted">Status:</span>
+        <span id="status-badge" class="font-bold bg-sketch-yellow text-sketch-ink px-2.5 py-0.5 border-2 border-sketch-ink sketch-pill -rotate-1">AVAILABLE FOR CONSULTATION</span>
+      </div>
+      <div class="hidden sm:flex items-center space-x-5 text-sketch-ink/85 dark:text-sketch-bg/90">
+        <span>📍 Palu, ID (UTC+8)</span>
+        <span id="live-clock" class="font-bold text-sketch-blue dark:text-[#7FB0FF]">--:-- WITA</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- STICKY SKETCHBOOK NAVIGATION -->
+  <header class="sketch-header sticky top-0 z-40 bg-sketch-bg/95 dark:bg-[#1E1D1B]/95 backdrop-blur-sm border-b-2 border-sketch-ink dark:border-sketch-muted transition-colors">
+    <div class="sketch-container min-h-[76px] flex items-center justify-between gap-4">
+
+      <!-- Brand / Logo -->
+      <a href="#home" class="group inline-flex items-center space-x-2 min-h-[48px] px-1 -rotate-1 hover:rotate-0 transition-transform">
+        <span class="font-display font-bold text-3xl tracking-tight text-sketch-ink dark:text-sketch-bg group-hover:text-sketch-red dark:group-hover:text-sketch-red transition-colors">
+          NEXFOLIO<span class="text-sketch-red">!</span>
+        </span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex items-center space-x-2 lg:space-x-5 text-lg font-bold">
+        <a href="#about" class="nav-link min-h-[48px] px-3 inline-flex items-center text-sketch-ink dark:text-sketch-bg hover:text-sketch-red dark:hover:text-sketch-red hover:-rotate-2 transition-all">01. About</a>
+        <a href="#skills" class="nav-link min-h-[48px] px-3 inline-flex items-center text-sketch-ink dark:text-sketch-bg hover:text-sketch-blue dark:hover:text-[#7FB0FF] hover:rotate-1 transition-all">02. Skills</a>
+        <a href="#experience" class="nav-link min-h-[48px] px-3 inline-flex items-center text-sketch-ink dark:text-sketch-bg hover:text-sketch-red dark:hover:text-sketch-red hover:-rotate-1 transition-all">03. Experience</a>
+        <a href="#projects" class="nav-link min-h-[48px] px-3 inline-flex items-center text-sketch-ink dark:text-sketch-bg hover:text-sketch-blue dark:hover:text-[#7FB0FF] hover:rotate-2 transition-all">04. Projects</a>
+        <a href="#contact" class="nav-link min-h-[48px] px-3 inline-flex items-center text-sketch-ink dark:text-sketch-bg hover:text-sketch-red dark:hover:text-sketch-red hover:-rotate-1 transition-all">05. Contact</a>
+      </nav>
+
+      <!-- Action Buttons & Theme Toggle -->
+      <div class="flex items-center space-x-3">
+        <!-- Theme / Paper Mode Toggle -->
+        <button id="theme-toggle" class="sketch-btn-secondary min-w-[48px] min-h-[48px] p-2.5 flex items-center justify-center text-sketch-ink dark:text-sketch-bg" title="Switch Paper Contrast" aria-label="Switch Paper Contrast">
+          <i data-lucide="sun" stroke-width="2.5" class="w-5 h-5 hidden dark:block text-sketch-yellow"></i>
+          <i data-lucide="moon" stroke-width="2.5" class="w-5 h-5 block dark:hidden text-sketch-ink"></i>
+        </button>
+
+        <!-- CV Action -->
+        <button onclick="openCvModal()" class="hidden sm:inline-flex items-center space-x-2 min-h-[48px] px-5 py-2.5 text-lg font-bold bg-sketch-yellow text-sketch-ink sketch-btn">
+          <span>Download CV</span>
+          <i data-lucide="arrow-down-to-line" stroke-width="2.5" class="w-5 h-5"></i>
+        </button>
+
+        <!-- Mobile Menu Button -->
+        <button id="mobile-menu-btn" class="md:hidden min-w-[48px] min-h-[48px] p-2.5 flex items-center justify-center sketch-btn-secondary text-sketch-ink dark:text-sketch-bg" aria-label="Toggle Menu">
+          <i data-lucide="menu" stroke-width="2.5" class="w-6 h-6"></i>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-menu" class="hidden md:hidden border-t-2 border-dashed border-sketch-ink dark:border-sketch-muted bg-sketch-bg dark:bg-[#1E1D1B] py-5">
+      <div class="sketch-container flex flex-col space-y-2 text-xl font-bold">
+        <a href="#about" class="mobile-nav-link min-h-[48px] px-3 flex items-center text-sketch-ink dark:text-sketch-bg hover:bg-sketch-yellow/60 dark:hover:bg-[#33302B] sketch-pill">01. About</a>
+        <a href="#skills" class="mobile-nav-link min-h-[48px] px-3 flex items-center text-sketch-ink dark:text-sketch-bg hover:bg-sketch-yellow/60 dark:hover:bg-[#33302B] sketch-pill">02. Skills</a>
+        <a href="#experience" class="mobile-nav-link min-h-[48px] px-3 flex items-center text-sketch-ink dark:text-sketch-bg hover:bg-sketch-yellow/60 dark:hover:bg-[#33302B] sketch-pill">03. Experience</a>
+        <a href="#projects" class="mobile-nav-link min-h-[48px] px-3 flex items-center text-sketch-ink dark:text-sketch-bg hover:bg-sketch-yellow/60 dark:hover:bg-[#33302B] sketch-pill">04. Projects</a>
+        <a href="#contact" class="mobile-nav-link min-h-[48px] px-3 flex items-center text-sketch-ink dark:text-sketch-bg hover:bg-sketch-yellow/60 dark:hover:bg-[#33302B] sketch-pill">05. Contact</a>
+        <div class="pt-2">
+          <button onclick="openCvModal()" class="inline-flex items-center justify-center space-x-2 w-full min-h-[48px] py-3 bg-sketch-yellow text-sketch-ink font-bold text-lg sketch-btn">
+            <span>Download CV</span>
+            <i data-lucide="arrow-down-to-line" stroke-width="2.5" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="sketch-container">
+
+    <!-- HERO SECTION -->
+    <section id="home" class="py-14 md:py-24 border-b-2 border-dashed border-sketch-ink/40 dark:border-sketch-muted/30 relative">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+
+        <!-- Left Asymmetrical Hero Column -->
+        <div class="lg:col-span-7 space-y-6">
+          <div class="inline-flex items-center space-x-2 px-4 py-1.5 bg-sketch-surface border-2 border-sketch-ink sketch-pill shadow-hard-sm -rotate-1">
+            <span class="text-sketch-blue dark:text-[#7FB0FF] font-bold">✎</span>
+            <span class="text-base tracking-wide">S.H. / Legal Drafter & Tech Practitioner</span>
+          </div>
+
+          <h1 id="hero-name" class="font-display font-bold text-4xl sm:text-6xl lg:text-[64px] tracking-tight leading-[1.06] text-sketch-ink">
+            MOH. KURNIAWAN SOBARI<span class="text-sketch-red">.</span>
+          </h1>
+
+          <p id="hero-tagline" class="text-xl sm:text-2xl text-sketch-ink/85 max-w-2xl leading-relaxed">
+            Menyelaraskan kepatuhan hukum administrasi negara dengan efisiensi otomatisasi teknologi publik.
+          </p>
+
+          <!-- Hand-drawn SVG Curved Arrow pointing to CTAs (Restrained on mobile) -->
+          <div class="hidden md:flex items-center space-x-3 text-sketch-blue dark:text-[#7FB0FF] -rotate-1 pt-1">
+            <span class="text-lg">Mulai jelajahi karya & catatan di sini</span>
+            <svg width="56" height="28" viewBox="0 0 60 30" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-sketch-red">
+              <path d="M2 18C18 6 38 6 54 16M54 16L45 10M54 16L46 23" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+
+          <div class="pt-2 flex flex-wrap items-center gap-4">
+            <a href="#projects" class="min-h-[48px] px-7 py-3 bg-sketch-red text-white text-xl font-bold sketch-btn inline-flex items-center space-x-2">
+              <span>View Projects</span>
+              <i data-lucide="arrow-right" stroke-width="2.5" class="w-5 h-5"></i>
+            </a>
+            <a href="#contact" class="min-h-[48px] px-7 py-3 bg-sketch-surface text-sketch-ink text-xl font-bold sketch-btn-secondary inline-flex items-center">
+              <span>Get In Touch</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right Column: Custom SVG Sketch Illustration + Sticky-Note Focus Card -->
+        <div class="lg:col-span-5 flex flex-col items-center lg:items-stretch space-y-6 mt-2 lg:mt-0">
+
+          <!-- Custom Hand-Drawn SVG Sketch Illustration (Legal Drafting + Tech Code Doodle) -->
+          <div class="hero-sketch-illustration w-full max-w-[380px] mx-auto -rotate-1 hover:rotate-0 transition-transform duration-300" aria-hidden="true">
+            <svg viewBox="0 0 360 190" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto overflow-visible">
+              <!-- Subtle Yellow Highlighter Splash Behind Illustration -->
+              <path d="M46 142C95 130 220 128 312 138C322 139 320 156 306 157C215 162 104 164 44 156C34 155 36 144 46 142Z" fill="#FFF9C4" class="dark:fill-[#4A4424]"/>
+
+              <!-- Sketchbook Legal Document Sheet (Left-Center) -->
+              <g transform="rotate(-3 135 95)">
+                <path d="M72 34C112 31 154 32 194 35C197 78 196 122 193 158C151 161 110 160 70 157C68 115 69 72 72 34Z" fill="#FFFFFF" class="dark:fill-[#282623]" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+                <!-- Folded Corner -->
+                <path d="M172 34L194 55L173 56Z" fill="#E5E0D8" class="dark:fill-[#3A3732]" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
+                <!-- Pasal / Regulation Header Line -->
+                <path d="M88 56C106 54 128 54 146 56" stroke="#FF4D4D" stroke-width="3" stroke-linecap="round"/>
+                <!-- Handwritten Text Lines -->
+                <path d="M88 74C118 72 148 73 176 74" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+                <path d="M88 90C114 89 140 90 168 89" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+                <path d="M88 106C108 105 128 106 148 105" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+                <!-- Official Wax Seal / Stamp Sketch -->
+                <circle cx="164" cy="130" r="14" stroke="#FF4D4D" stroke-width="2.4" stroke-dasharray="4 2"/>
+                <path d="M158 130L163 135L172 125" stroke="#FF4D4D" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </g>
+
+              <!-- Floating Code & Automation Window Card (Right Overlap) -->
+              <g transform="rotate(4 252 96)">
+                <rect x="184" y="48" width="126" height="92" rx="12" fill="#FFFFFF" class="dark:fill-[#282623]" stroke="currentColor" stroke-width="2.6"/>
+                <!-- Window Top Bar -->
+                <path d="M185 68H309" stroke="currentColor" stroke-width="2.2"/>
+                <circle cx="198" cy="58" r="3" fill="#FF4D4D"/>
+                <circle cx="209" cy="58" r="3" fill="#2D5DA1"/>
+                <circle cx="220" cy="58" r="3" fill="currentColor"/>
+                <!-- Hand-drawn Code Brackets { </> } -->
+                <path d="M214 86C207 86 207 94 207 99C207 103 203 105 203 105C203 105 207 107 207 111C207 116 207 124 214 124" stroke="#2D5DA1" class="dark:stroke-[#7FB0FF]" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M280 86C287 86 287 94 287 99C287 103 291 105 291 105C291 105 287 107 287 111C287 116 287 124 280 124" stroke="#2D5DA1" class="dark:stroke-[#7FB0FF]" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M252 88L241 122" stroke="#FF4D4D" stroke-width="2.6" stroke-linecap="round"/>
+                <path d="M233 98L224 105L233 112" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M261 98L270 105L261 112" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </g>
+
+              <!-- Hand-Drawn Fountain Pen / Pencil Sketch (Bottom Left) -->
+              <g transform="rotate(-28 54 134)">
+                <path d="M36 92L46 84L56 92L54 156L46 170L38 156Z" fill="#FFF9C4" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/>
+                <path d="M38 154H54" stroke="currentColor" stroke-width="2.2"/>
+                <path d="M44 166L46 171L48 166" fill="#FF4D4D"/>
+              </g>
+
+              <!-- Playful Sparkles & Annotation Marks -->
+              <path d="M322 32V44M316 38H328" stroke="#FF4D4D" stroke-width="2.4" stroke-linecap="round"/>
+              <path d="M46 44V52M42 48H50" stroke="#2D5DA1" class="dark:stroke-[#7FB0FF]" stroke-width="2.4" stroke-linecap="round"/>
+              <path d="M132 18C144 14 158 15 168 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 4"/>
+            </svg>
+          </div>
+
+          <!-- Sticky-Note Focus Card -->
+          <div class="relative w-full">
+            <!-- Masking Tape Strip Decoration -->
+            <div class="sketch-tape hidden sm:block"></div>
+
+            <div class="bg-sketch-yellow p-6 sm:p-7 border-2 border-sketch-ink sketch-box shadow-hard-lg rotate-1 hover:rotate-0 transition-transform duration-200 space-y-4">
+              <div class="flex items-center justify-between border-b-2 border-dashed border-sketch-ink/40 pb-3">
+                <h3 class="font-display font-bold text-2xl text-sketch-ink">Core Focus</h3>
+                <span class="w-4 h-4 rounded-full bg-sketch-red border-2 border-sketch-ink shadow-[2px_2px_0_#2D2D2D]" title="Pinned Note"></span>
+              </div>
+
+              <ul class="space-y-3 text-lg">
+                <li class="flex items-start space-x-3">
+                  <span class="sketch-icon-circle mt-0.5 text-sketch-red"><i data-lucide="check" stroke-width="3" class="w-4 h-4"></i></span>
+                  <span>Legal Drafting & Regional Regulations</span>
+                </li>
+                <li class="flex items-start space-x-3">
+                  <span class="sketch-icon-circle mt-0.5 text-sketch-blue dark:text-[#7FB0FF]"><i data-lucide="check" stroke-width="3" class="w-4 h-4"></i></span>
+                  <span>Public Policy & Asset Management</span>
+                </li>
+                <li class="flex items-start space-x-3">
+                  <span class="sketch-icon-circle mt-0.5 text-sketch-ink"><i data-lucide="check" stroke-width="3" class="w-4 h-4"></i></span>
+                  <span>Google Apps Script & Web Automation</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="py-16 md:py-24 border-b-2 border-dashed border-sketch-ink/40 dark:border-sketch-muted/30">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-start">
+        <div class="md:col-span-4 space-y-3">
+          <span class="inline-block px-3 py-1 bg-sketch-blue text-white text-base font-bold sketch-pill -rotate-2">01 / ABOUT ME</span>
+          <h2 class="font-display font-bold text-3xl sm:text-4xl leading-tight">Profil & Pendekatan Kerja</h2>
+        </div>
+
+        <div class="md:col-span-8 bg-sketch-surface p-6 sm:p-8 border-2 border-sketch-ink sketch-box shadow-hard space-y-6">
+          <p id="about-text-content" class="text-xl text-sketch-ink/90 leading-relaxed">
+            Sebagai lulusan Sarjana Hukum yang bertugas di Biro Hukum Provinsi Sulawesi Tengah, saya berfokus pada penyusunan regulasi yang presisi, pengusulan naskah kebijakan berbasis bukti, serta modernisasi alur administrasi birokrasi melalui pemrograman web dan otomatisasi Google Workspace.
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 lg:gap-5 pt-5 border-t-2 border-dashed border-sketch-ink/30">
+            <div class="p-3.5 bg-sketch-bg border-2 border-sketch-ink sketch-box-alt -rotate-1">
+              <span class="text-sm text-sketch-blue dark:text-[#7FB0FF] font-bold block uppercase">Pendidikan</span>
+              <span class="font-bold text-lg">Sarjana Hukum (S.H.)</span>
+            </div>
+            <div class="p-3.5 bg-sketch-yellow/60 border-2 border-sketch-ink sketch-box rotate-1">
+              <span class="text-sm text-sketch-red font-bold block uppercase">Institusi</span>
+              <span class="font-bold text-lg">Pemprov Sulawesi Tengah</span>
+            </div>
+            <div class="p-3.5 bg-sketch-bg border-2 border-sketch-ink sketch-box-alt -rotate-1">
+              <span class="text-sm text-sketch-blue dark:text-[#7FB0FF] font-bold block uppercase">Kota</span>
+              <span class="font-bold text-lg">Palu, Indonesia</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS SECTION -->
+    <section id="skills" class="py-16 md:py-24 border-b-2 border-dashed border-sketch-ink/40 dark:border-sketch-muted/30">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-4">
+        <div class="space-y-2">
+          <span class="inline-block px-3 py-1 bg-sketch-red text-white text-base font-bold sketch-pill rotate-1">02 / COMPETENCIES</span>
+          <h2 class="font-display font-bold text-3xl sm:text-4xl">Keahlian Strategis</h2>
+        </div>
+        <p class="text-lg text-sketch-ink/80 border-b-2 border-sketch-yellow px-1">Kombinasi Keahlian Hukum & Digital Architecture</p>
+      </div>
+
+      <div id="skills-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-7">
+        <!-- Rendered via JS -->
+      </div>
+    </section>
+
+    <!-- EXPERIENCE SECTION -->
+    <section id="experience" class="py-16 md:py-24 border-b-2 border-dashed border-sketch-ink/40 dark:border-sketch-muted/30">
+      <div class="mb-12 space-y-2">
+        <span class="inline-block px-3 py-1 bg-sketch-yellow text-sketch-ink border-2 border-sketch-ink text-base font-bold sketch-pill -rotate-1">03 / CAREER TRACK</span>
+        <h2 class="font-display font-bold text-3xl sm:text-4xl">Pengalaman Kerja</h2>
+      </div>
+
+      <div id="experience-list" class="space-y-8">
+        <!-- Rendered via JS -->
+      </div>
+    </section>
+
+    <!-- PROJECTS SECTION -->
+    <section id="projects" class="py-16 md:py-24 border-b-2 border-dashed border-sketch-ink/40 dark:border-sketch-muted/30">
+      <div class="mb-12 space-y-2">
+        <span class="inline-block px-3 py-1 bg-sketch-blue text-white text-base font-bold sketch-pill rotate-1">04 / SELECTED WORKS</span>
+        <h2 class="font-display font-bold text-3xl sm:text-4xl">Portofolio Proyek</h2>
+      </div>
+
+      <!-- Per-category carousel rows — Rendered via JS -->
+      <div id="projects-categories"></div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="py-16 md:py-24">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+
+        <!-- Left Info Column -->
+        <div class="lg:col-span-5 space-y-6">
+          <div class="space-y-3">
+            <span class="inline-block px-3 py-1 bg-sketch-red text-white text-base font-bold sketch-pill -rotate-1">05 / GET IN TOUCH</span>
+            <h2 class="font-display font-bold text-4xl sm:text-5xl leading-tight">Mari Berkolaborasi!</h2>
+          </div>
+
+          <p class="text-xl text-sketch-ink/85 leading-relaxed">
+            Terbuka untuk diskusi formulasi regulasi, kajian hukum, konsultasi otomatisasi sistem birokrasi, maupun peluang kerja sama profesional.
+          </p>
+
+          <div class="space-y-4 text-lg pt-2">
+            <div class="flex items-center space-x-3">
+              <span class="sketch-icon-circle bg-sketch-yellow"><i data-lucide="mail" stroke-width="2.5" class="w-5 h-5 text-sketch-ink"></i></span>
+              <span id="contact-email" class="font-bold">contact@kurniawan.dev</span>
+            </div>
+            <div class="flex items-center space-x-3">
+              <span class="sketch-icon-circle bg-sketch-surface"><i data-lucide="map-pin" stroke-width="2.5" class="w-5 h-5 text-sketch-red"></i></span>
+              <span>Palu, Sulawesi Tengah, Indonesia</span>
+            </div>
+          </div>
+
+          <div class="pt-4 flex items-center space-x-4">
+            <a id="link-linkedin" href="#" target="_blank" class="min-w-[48px] min-h-[48px] p-3 bg-sketch-surface sketch-btn-secondary inline-flex items-center justify-center" aria-label="LinkedIn">
+              <i data-lucide="linkedin" stroke-width="2.5" class="w-5 h-5"></i>
+            </a>
+            <a id="link-github" href="#" target="_blank" class="min-w-[48px] min-h-[48px] p-3 bg-sketch-surface sketch-btn-secondary inline-flex items-center justify-center" aria-label="GitHub">
+              <i data-lucide="github" stroke-width="2.5" class="w-5 h-5"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right Sketchbook Form -->
+        <div class="lg:col-span-7 relative">
+          <div class="sketch-tape hidden sm:block"></div>
+          <div class="bg-sketch-surface p-6 sm:p-10 border-2 border-sketch-ink sketch-box shadow-hard-lg">
+            <form id="contact-form" onsubmit="handleContactSubmit(event)" class="space-y-5">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div class="space-y-1.5">
+                  <label class="text-lg font-bold text-sketch-ink">Nama Lengkap</label>
+                  <input type="text" id="form-name" required placeholder="Tulis nama Anda..." class="sketch-input w-full min-h-[48px] px-4 py-2.5 text-lg">
+                </div>
+                <div class="space-y-1.5">
+                  <label class="text-lg font-bold text-sketch-ink">Email Address</label>
+                  <input type="email" id="form-email" required placeholder="nama@email.com" class="sketch-input w-full min-h-[48px] px-4 py-2.5 text-lg">
+                </div>
+              </div>
+
+              <div class="space-y-1.5">
+                <label class="text-lg font-bold text-sketch-ink">Subjek / Topik</label>
+                <input type="text" id="form-subject" required placeholder="Diskusi proyek atau regulasi..." class="sketch-input w-full min-h-[48px] px-4 py-2.5 text-lg">
+              </div>
+
+              <div class="space-y-1.5">
+                <label class="text-lg font-bold text-sketch-ink">Pesan Anda</label>
+                <textarea id="form-message" rows="4" required placeholder="Tuliskan catatan pesan Anda di sini..." class="sketch-input w-full px-4 py-3 text-lg"></textarea>
+              </div>
+
+              <button type="submit" id="btn-submit-contact" class="w-full min-h-[52px] py-3.5 bg-sketch-red text-white text-xl font-bold sketch-btn flex justify-center items-center space-x-2">
+                <span>Kirim Pesan Sekarang</span>
+                <i data-lucide="send" stroke-width="2.5" class="w-5 h-5"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t-2 border-sketch-ink py-10 bg-sketch-surface mt-12">
+    <div class="sketch-container flex flex-col md:flex-row justify-between items-center gap-4 text-base text-sketch-ink/85">
+      <div>
+        <span>© 2026 NEXFOLIO — Moh. Kurniawan Sobari, S.H.</span>
+      </div>
+      <div class="flex items-center space-x-6">
+        <span class="bg-sketch-yellow text-sketch-ink px-2.5 py-0.5 border border-sketch-ink sketch-pill font-bold">Sketchbook Edition</span>
+        <a href="#home" class="min-h-[48px] inline-flex items-center font-bold hover:text-sketch-red transition-colors">Back to Top ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- PROJECT DETAIL MODAL -->
+  <div id="project-modal" class="fixed inset-0 z-50 hidden bg-sketch-ink/60 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+    <div class="bg-sketch-bg border-2 border-sketch-ink sketch-box shadow-hard-lg max-w-2xl w-full p-6 sm:p-8 space-y-5 relative max-h-[90vh] overflow-y-auto">
+      <button onclick="closeProjectModal()" class="absolute top-5 right-5 min-w-[48px] min-h-[48px] p-2.5 bg-sketch-surface sketch-btn flex items-center justify-center" aria-label="Close Modal">
+        <i data-lucide="x" stroke-width="2.5" class="w-5 h-5"></i>
+      </button>
+
+      <span id="modal-project-category" class="inline-block px-3 py-1 bg-sketch-yellow text-sketch-ink border-2 border-sketch-ink sketch-pill text-base font-bold">CATEGORY</span>
+      <h2 id="modal-project-title" class="font-display font-bold text-3xl pr-12">Project Title</h2>
+
+      <div class="border-2 border-sketch-ink sketch-box-alt overflow-hidden shadow-hard-sm bg-sketch-surface">
+        <img id="modal-project-image" src="" alt="Project Preview" class="w-full h-60 object-cover">
+      </div>
+
+      <div class="space-y-2 bg-sketch-surface p-5 border-2 border-sketch-ink sketch-box">
+        <h4 class="font-display font-bold text-xl text-sketch-blue dark:text-[#7FB0FF]">Detail Deskripsi & Studi Kasus</h4>
+        <p id="modal-project-desc" class="text-lg text-sketch-ink/90 leading-relaxed">Full description content...</p>
+      </div>
+
+      <div class="space-y-2">
+        <h4 class="font-bold text-lg text-sketch-ink/85">Teknologi / Teknis:</h4>
+        <div id="modal-project-tech" class="flex flex-wrap gap-2 text-base"></div>
+      </div>
+
+      <div class="pt-4 border-t-2 border-dashed border-sketch-ink/40 flex flex-wrap gap-4">
+        <a id="modal-project-demo" href="#" target="_blank" class="min-h-[48px] px-6 py-3 bg-sketch-red text-white text-lg font-bold sketch-btn inline-flex items-center">Database</a>
+        <a id="modal-project-repo" href="#" target="_blank" class="min-h-[48px] px-6 py-3 bg-sketch-surface text-sketch-ink text-lg font-bold sketch-btn-secondary inline-flex items-center">Preview</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- CV DOWNLOAD / PREVIEW MODAL -->
+  <div id="cv-modal" class="fixed inset-0 z-50 hidden bg-sketch-ink/60 flex items-center justify-center p-4 sm:p-6">
+    <div class="bg-sketch-yellow border-2 border-sketch-ink sketch-box shadow-hard-lg max-w-md w-full p-7 sm:p-8 space-y-5 relative text-center">
+      <button onclick="closeCvModal()" class="absolute top-4 right-4 min-w-[48px] min-h-[48px] p-2.5 bg-sketch-surface sketch-btn flex items-center justify-center" aria-label="Close CV Modal">
+        <i data-lucide="x" stroke-width="2.5" class="w-5 h-5"></i>
+      </button>
+
+      <div class="w-16 h-16 mx-auto bg-sketch-surface border-2 border-sketch-ink sketch-circle shadow-hard-sm text-sketch-red flex items-center justify-center">
+        <i data-lucide="file-text" stroke-width="2.5" class="w-8 h-8"></i>
+      </div>
+
+      <h3 class="font-display font-bold text-3xl">Curriculum Vitae</h3>
+      <p class="text-lg text-sketch-ink/85">
+        Unduh CV terbaru Moh. Kurniawan Sobari, S.H. (Format PDF, mencakup riwayat legal drafting, pendidikan, dan proyek teknologi).
+      </p>
+
+      <div class="pt-2 flex flex-col space-y-3 text-lg">
+        <a id="cv-download-link" href="#" target="_blank" class="w-full min-h-[48px] py-3 bg-sketch-red text-white font-bold sketch-btn flex justify-center items-center space-x-2">
+          <span>Unduh Dokumen CV</span>
+          <i data-lucide="external-link" stroke-width="2.5" class="w-5 h-5"></i>
+        </a>
+        <button onclick="closeCvModal()" class="w-full min-h-[48px] py-3 bg-sketch-surface font-bold sketch-btn-secondary">Tutup</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 hidden max-w-md p-4 bg-sketch-yellow text-sketch-ink text-lg font-bold border-2 border-sketch-ink sketch-box shadow-hard flex items-center space-x-3 -rotate-1">
+    <span class="sketch-icon-circle bg-sketch-surface"><i data-lucide="info" stroke-width="2.5" class="w-5 h-5 text-sketch-red"></i></span>
+    <span id="toast-message">Notification message</span>
+  </div>
+
+  <!-- Application JS -->
+  <script src="/js/main.js"></script>
+</body>
+</html>
